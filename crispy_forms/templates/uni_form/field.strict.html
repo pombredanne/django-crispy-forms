@@ -11,17 +11,17 @@
         {% endfor %}
 
         {% if field|is_checkbox %}
-            {{ field|with_class }}
+            {% crispy_field field %}
         {% endif %}
 
         {% if field.label %}
-            <label for="{{ field.auto_id }}" class="inlineLabel">
+            <label for="{{ field.id_for_label }}" class="inlineLabel">
                 {{ field.label|safe }}{% if field.field.required %}<em>*</em>{% endif %}
             </label>
         {% endif %}
 
         {% if not field|is_checkbox %}
-            {{ field|with_class }}
+            {% crispy_field field %}
         {% endif %}
 
         {% if field.help_text %}
