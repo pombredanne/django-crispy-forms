@@ -51,3 +51,30 @@ Contributors
 * Jonas Obrist <ojii>
 * Charlie Denton <meshy>
 * Jason Culverhouse <jasonculverhouse>
+* James Turnbull <hturnbull>
+* Patrick Toal <ptoal>
+* David Bennett <dbinit>
+* bitrut <bitrut>
+* ximi
+* Christopher Petrilli <petrilli>
+* James <jamesmfriedman>
+* Jeroen Vloothuis <jeroenvloothuis>
+* Daniel Izquierdo <izquierdo>
+* gaftech
+* Michal Kuffa <beezz>
+* Paul Oswald <poswald>
+* Rudy Mutter <rmutter>
+* Samuel Goldszmidt <ouhouhsami>
+* Andrei Antoukh <niwibe>
+* <clairetheyers>
+* Rivo Laks <rivol>
+* Lloyd Philbrook <phoolish>
+* Piet Delport <pjdelport>
+* <lmoppert>
+* Markus Hametner <fin>
+* Thomas Grainger <graingert>
+* Lee Semel <lsemel>
+* <david-e>
+* Alex Yakovlev <libraM>
+* Si Feng <devfeng>
+* Igor Katson <ikatson>
