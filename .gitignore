@@ -15,6 +15,7 @@ downloads/*
 #defaults
 *.pyc
 *.pyo
+__pycache__
 
 #temp file
 tempfile
@@ -22,4 +23,13 @@ tempfile
 
 # coverage 
 .coverage
+htmlcov
 _build
+
+# OSX
+*.DS_Store
+
+# editors
+.project
+.pydevproject
+.settings/

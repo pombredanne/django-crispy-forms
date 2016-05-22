@@ -2,19 +2,23 @@
 django-crispy-forms
 ===================
 
+.. image:: https://travis-ci.org/maraujop/django-crispy-forms.png?branch=dev
+   :alt: Build Status
+   :target: https://travis-ci.org/maraujop/django-crispy-forms
+
+.. image:: http://codecov.io/github/maraujop/django-crispy-forms/coverage.svg?branch=master
+   :target: http://codecov.io/github/maraujop/django-crispy-forms?branch=master
+
 The best way to have Django_ DRY forms. Build programmatic reusable layouts out of components, having full control of the rendered HTML without writing HTML in templates. All this without breaking the standard way of doing things in Django, so it plays nice with any other form application.
+
+`django-crispy-forms` supports Python 2.7/Python 3.2+ and Django 1.8+
 
 The application mainly provides:
 
-* A filter named ``|crispy`` that will render elegant div based forms. Think of it as the built-in methods: ``as_table``, ``as_ul`` and ``as_p``. You cannot tune up the output, but it is easy to start using it. 
+* A filter named ``|crispy`` that will render elegant div based forms. Think of it as the built-in methods: ``as_table``, ``as_ul`` and ``as_p``. You cannot tune up the output, but it is easy to start using it.
 * A tag named ``{% crispy %}`` that will render a form based on your configuration and specific layout setup. This gives you amazing power without much hassle, helping you save tons of time.
 
-Django-crispy-forms 1.1.0 has built-in support for two different CSS frameworks, known as template packs within django-crispy-forms:
-
-* `bootstrap`_ The default template pack. The popular simple and flexible HTML, CSS, and Javascript for user interfaces from Twitter.
-* `Uni-form`_ Nice looking, well structured, highly customizable, accessible and usable forms.
-
-But you can create a template pack for your own CSS framework and submit it. `see the docs`_ for more information. You can easily switch between both using ``CRISPY_TEMPLATE_PACK`` setting variable, setting it to ``bootstrap`` or ``uni_form``.
+Django-crispy-forms supports several frontend frameworks, such as Twitter `Bootstrap`_ (versions 2 and 3), `Uni-form`_ and Foundation. You can also easily adapt your custom company's one, creating your own, `see the docs`_ for more information. You can easily switch among them using ``CRISPY_TEMPLATE_PACK`` setting variable.
 
 .. _`Uni-form`: http://sprawsm.com/uni-form
 .. _`Bootstrap`: http://twitter.github.com/bootstrap/index.html
@@ -60,9 +64,5 @@ Special thanks
 .. _`@pydanny`: https://github.com/pydanny
 .. _`@kennethlove`: https://github.com/kennethlove
 
-Note
-----
-
-django-crispy-forms only supports Django 1.2 or higher and Python 2.5.4, Python 2.6.x and Python 2.7.x. If you need to support earlier versions of Django or Python you will need to use django-uni-form 0.7.0.
 
 .. _Django: http://djangoproject.com

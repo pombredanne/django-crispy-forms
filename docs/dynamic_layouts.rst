@@ -1,3 +1,5 @@
+.. _`dynamic layouts`:
+
 ==========================
 Updating layouts on the go
 ==========================
@@ -5,6 +7,7 @@ Updating layouts on the go
 Layouts can be changed, adapted and generated programmatically.
 
 The next sections will explain how to select parts of a layout and update them. We will use this API from the ``FormHelper`` instance and not the layout itself. This API's basic behavior consists of selecting the piece of the layout to manipulate and chaining methods that alter it after that.
+
 
 Selecting layout objects with slices
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -25,22 +28,23 @@ You could access ``'email'`` string doing::
 
     form.helper[0][0]
 
+
 wrap
 ~~~~
 
 One useful action you can apply on a slice is ``wrap``, which wraps every selected field using a layout object type and parameters passed. Let's see an example. If We had this layout::
 
     Layout(
-       'field_1',
-       'field_2',
-       'field_3'
+        'field_1',
+        'field_2',
+        'field_3'
     )
 
 We could do::
 
     form.helper[1:3].wrap(Field, css_class="hello")
 
-We would en up having this layout::
+We would end up having this layout::
 
     Layout(
         'field_1',
@@ -74,6 +78,7 @@ Also you can pass ``args`` and ``kwargs``::
 
     form.helper[1:3].wrap(Fieldset, "legend of the fieldset", css_class="fieldsets")
 
+
 .. _`wrap_together`:
 
 wrap_together
@@ -89,9 +94,9 @@ wrap_together
 
 We could do::
 
-    form.helper[1:3].wrap_together(Field, css_class="hello")
+    form.helper[0:3].wrap_together(Field, css_class="hello")
 
-We would en up having this layout::
+We would end up having this layout::
 
     Layout(
         Field(
@@ -102,12 +107,47 @@ We would en up having this layout::
         )
     )
 
+
+update_attributes
+~~~~~~~~~~~~~~~~~
+
+Updates attributes of every layout object contained in a slice::
+
+    Layout(
+        'field_1',
+        Field('field_2'),
+        Field('field_3')
+    )
+
+We could do::
+
+    form.helper[0:3].update_attributes(css_class="hello")
+
+Layout would turn into::
+
+    Layout(
+        'field_1',
+        Field('field_2', css_class='hello'),
+        Field('field_3', css_class='hello')
+    )
+
+We can also apply it to a field name wrapped in a layout object::
+
+    form.helper['field_2'].update_attributes(css_class="hello")
+
+However, the following wouldn't be correct::
+
+    form.helper['field_1'].update_attributes(css_class="hello")
+
+Because it would change ``Layout`` attrs. It's your job to have it wrapped correctly.
+
 all
 ~~~
 
 This method selects all first level of depth layout objects::
 
     form.helper.all().wrap(Field, css_class="hello")
+
 
 Selecting a field name
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -137,6 +177,7 @@ Previous layout would become::
         ),
         'field_3'
     )
+
 
 filter
 ~~~~~~
@@ -180,22 +221,20 @@ If we wanted to search deeper, wrapping ``password``, we would need to set ``max
 
 In other words ``max_level`` indicates the number of jumps crispy-forms can do within a layout object for matching. In this case getting into the first ``Div`` would be one jump, and getting into the next ``Div`` would be the second jump, thus ``max_level=2``.
 
-FormHelper with a form attached
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+We can turn filter greedy, making it search as deep as possible, setting ``greedy`` to ``True``::
 
-Since version 1.2.0 ``FormHelper`` optinally can be passed an instance of a form. You would do it this way::
+    form.helper.filter(basestring, greedy=True).wrap(Div, css_class="hello")
 
-    class ExampleForm(forms.Form):
-        def __init__(self, *args, **kwargs):
-            super(ExampleForm, self).__init__(*args, **kwargs)
-            self.helper = FormHelper(self)
+**Parameters:**
 
-That makes the helper able to cross match the layout with the form instance, being able to search by widget type. Also when you do this django-crispy-forms builds a default layout using ``form.fields`` for you, so you don't have to manually list them all if your form is huge.
+ * ``max_level``: An integer representing the number of jumps that crispy-forms should do when filtering. Defaults to ``0``.
+ * ``greedy``: A boolean that indicates whether to filter greedy or not. Defaults to ``False``.
+
 
 filter_by_widget
 ~~~~~~~~~~~~~~~~
 
-Matches all fields of a widget type. This method assumes you are using a helper with a form attached, you could filter by widget type doing::
+Matches all fields of a widget type. This method assumes you are using a helper with a form attached, see section :ref:`helper form attached`, you could filter by widget type doing::
 
     form.helper.filter_by_widget(forms.PasswordInput).wrap(Field, css_class="hero")
 
@@ -217,10 +256,11 @@ Supposing ``password1`` and ``password2`` fields are using widget ``PasswordInpu
 
 An interesting real use case example here would be to wrap all ``SelectInputs`` with a custom made ``ChosenField`` that renders the field using a chosenjs compatible field.
 
+
 exclude_by_widget
 ~~~~~~~~~~~~~~~~~
 
-Excludes all fields of a widget type. This method assumes you are using a helper with a form attached::
+Excludes all fields of a widget type. This method assumes you are using a helper with a form attached, see section :ref:`helper form attached`::
 
     form.helper.exclude_by_widget(forms.PasswordInput).wrap(Field, css_class="hero")
 
@@ -240,10 +280,11 @@ Supposing ``password1`` and ``password2`` fields are using widget ``PasswordInpu
         Div('password2')
     )
 
+
 Manipulating a layout
 ~~~~~~~~~~~~~~~~~~~~~
 
-Besides selecting layout objects and applying actions to them, you can also manipulate layouts themselves and layout obejcts easily, like if they were lists. We won't do this from the helper, but the layout and layout objects themselves. Consider this a lower level API.
+Besides selecting layout objects and applying actions to them, you can also manipulate layouts themselves and layout objects easily, like if they were lists. We won't do this from the helper, but the layout and layout objects themselves. Consider this a lower level API.
 
 All layout objects that can wrap others, contain a inner attribute ``fields`` which is a list, not a dictionary as in Django forms. You can apply any list methods on them easily. Beware that a ``Layout`` behaves itself like other layout objects such as ``Div``, the only difference is that it is the root of the tree.
 
@@ -288,7 +329,6 @@ This is how you would insert a layout object in the second position of a Layout:
 This is how you would insert a layout object in the second position of the second layout object::
 
     layout[1].insert(1, HTML("<p>whatever</p>"))
-
 
 .. Warning ::
 

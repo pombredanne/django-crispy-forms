@@ -1,5 +1,7 @@
-from django.conf.urls.defaults import *
+from django.conf.urls import url
+from django.views.generic import View
 
-urlpatterns = patterns('',
-    url(r'^simple/action/$', 'simpleAction', name = 'simpleAction'),
-)
+
+urlpatterns = [
+    url(r'^simple/action/$', View.as_view(), name='simpleAction'),
+]

@@ -22,9 +22,8 @@ sys.path.insert(0, os.path.abspath('../crispy_forms'))
 sys.path.insert(0, os.path.abspath('../crispy_forms/templatetags'))
 sys.path.append(os.path.abspath('_themes'))
 
-import settings
-from django.core.management import setup_environ
-setup_environ(settings)
+from django.conf import settings
+settings.configure()
 
 
 # -- General configuration -----------------------------------------------------
@@ -47,7 +46,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'django-crispy-forms'
-copyright = u'2009-2011, Miguel Araujo and Daniel Greenfeld'
+copyright = u'2009-2013, Miguel Araujo and Daniel Greenfeld'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the

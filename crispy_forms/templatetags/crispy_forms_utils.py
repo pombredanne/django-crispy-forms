@@ -2,17 +2,21 @@
 import re
 
 from django import template
-from django.utils.encoding import force_unicode
+from django.utils.encoding import force_text
 from django.utils.functional import allow_lazy
+
+from crispy_forms.compatibility import text_type
+
 
 register = template.Library()
 
 
-def selectively_remove_spaces_between_tags(value):
-    html = re.sub(r'>\s+<', '><', force_unicode(value))
-    html = re.sub(r'</button><', '</button> <', force_unicode(html))
-    return re.sub(r'(<input[^>]+>)<', r'\1 <', force_unicode(html))
-selectively_remove_spaces_between_tags = allow_lazy(selectively_remove_spaces_between_tags, unicode)
+def remove_spaces(value):
+    html = re.sub(r'>\s{3,}<', '> <', force_text(value))
+    return re.sub(r'/><', r'/> <', force_text(html))
+
+
+remove_spaces = allow_lazy(remove_spaces, text_type)
 
 
 class SpecialSpacelessNode(template.Node):
@@ -20,9 +24,7 @@ class SpecialSpacelessNode(template.Node):
         self.nodelist = nodelist
 
     def render(self, context):
-        return selectively_remove_spaces_between_tags(
-            self.nodelist.render(context).strip()
-        )
+        return remove_spaces(self.nodelist.render(context).strip())
 
 
 @register.tag
@@ -34,4 +36,5 @@ def specialspaceless(parser, token):
     """
     nodelist = parser.parse(('endspecialspaceless',))
     parser.delete_first_token()
+
     return SpecialSpacelessNode(nodelist)
